@@ -1,38 +1,38 @@
 <style>
     .container__cards {
         margin-top: 20px;
-        display: flex;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 10px;
+    }
+
+    .card {
+        max-width: 250px;
     }
 </style>
 {{>navigation}}
 <h1 class="text-center mt-5">Listado de Notas</h1>
 <div class="container">
 
-    <input type="text" class="form-control mb-3" placeholder="Buscar">
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+    <a href="/note" class="btn btn-primary">
         <i class="fas fa-plus"></i>
-    </button>
+    </a>
 
-    <!-- Modal -->
-    {{>modal}}
 
     <div class="container__cards">
         {{#each notes}}
         <div class="card">
-            <div class="card-header">
+            <div class="card-header text-center">
                 {{title}}
             </div>
             <div class="card-body">
                 {{description}}
             </div>
-            <div class="card-footer">
+            <div class="card-footer ">
 
                 <button class="btn btn-danger" onclick="alertDelete({{id}})"><i class="fas fa-trash"></i></button>
-                <button class="btn btn-primary" onclick="updateNote({{id}})"><i class="fas fa-pencil-alt"></i></button>
+                <a class="btn btn-primary" href="/note/edit/{{id}}"><i class="fas fa-pencil-alt"></i></a>
             </div>
         </div>
         {{/each}}
@@ -43,17 +43,9 @@
 
 
 <script>
-   
-    let modal = new bootstrap.Modal(document.getElementById("modal"))
-
-    function openModal() {
-        modal.show()
-    }
-    function closeModal() {
-        modal.hide()
-    }
-    function alertDelete(id){
-         Swal.fire({
+  
+    function alertDelete(id) {
+        Swal.fire({
             title: '¿Esta seguro qué desea eliminar la nota?',
             text: "Los cambios no pueden ser revertidos",
             icon: 'warning',
@@ -71,10 +63,7 @@
         })
     }
     function deleteNote(id) {
-     console.log(id) 
+        window.location.href = `note/delete/${id}`;
     }
-    function updateNote(id) {
-        modal.show()
-        console.log(id)
-    }
+
 </script>

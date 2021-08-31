@@ -64,6 +64,7 @@ class Server {
     routes() {
         this.app.use(this.paths.front, require('./routes/frontRouter'))
         this.app.use(this.paths.front, require('./routes/authRouter'))
+        this.app.use(this.paths.front, require('./routes/notesRouter'))
     }
 }
 

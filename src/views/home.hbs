@@ -1,0 +1,80 @@
+<style>
+    .container__cards {
+        margin-top: 20px;
+        display: flex;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 10px;
+    }
+</style>
+{{>navigation}}
+<h1 class="text-center mt-5">Listado de Notas</h1>
+<div class="container">
+
+    <input type="text" class="form-control mb-3" placeholder="Buscar">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modal -->
+    {{>modal}}
+
+    <div class="container__cards">
+        {{#each notes}}
+        <div class="card">
+            <div class="card-header">
+                {{title}}
+            </div>
+            <div class="card-body">
+                {{description}}
+            </div>
+            <div class="card-footer">
+
+                <button class="btn btn-danger" onclick="alertDelete({{id}})"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-primary" onclick="updateNote({{id}})"><i class="fas fa-pencil-alt"></i></button>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+
+</div>
+
+
+<script>
+   
+    let modal = new bootstrap.Modal(document.getElementById("modal"))
+
+    function openModal() {
+        modal.show()
+    }
+    function closeModal() {
+        modal.hide()
+    }
+    function alertDelete(id){
+         Swal.fire({
+            title: '¿Esta seguro qué desea eliminar la nota?',
+            text: "Los cambios no pueden ser revertidos",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                deleteNote(id)
+
+            }
+        })
+    }
+    function deleteNote(id) {
+     console.log(id) 
+    }
+    function updateNote(id) {
+        modal.show()
+        console.log(id)
+    }
+</script>
